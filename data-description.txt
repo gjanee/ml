@@ -1,0 +1,58 @@
+title
+    Workshop title
+
+date
+    Date of workshop (single session) or first date of workshop
+    (multiple sessions)
+
+num_students
+    Number of students (i.e., attendees)
+
+modality
+    One of:
+        - In person
+        - Online
+        - Hybrid
+
+scheduling
+    One of:
+        - SS
+            Single session
+        - MSSW
+            Multiple sessions within same week
+        - MSMW
+            Multiple sessions over multiple weeks
+
+week_in_quarter
+    Normalized week in quarter of first workshop date, computed using
+    logic borrowed from the Waitz Shiny application.
+        - Quarter weeks start on Sunday.  Thus, regardless of which
+          day of the week the first day of a quarter falls on, it is
+          in week 1, and the following Monday is in week 2.
+        - Quarters are adjusted to have the same length.  (All
+          quarters have the same number of teaching days, but due to
+          holidays, Fall quarters have 4 extra days and are 1 week
+          longer than Winter and Spring quarters.)  For Fall quarters,
+          we exclude the week containing Thanksgiving.  In this way
+          all quarters have exactly 11 weeks, and weeks 10 and 11 are
+          always dead week and finals week, respectively.
+    For our purposes here, a workshop that took place outside a
+    quarter, i.e. during a break, is treated as belonging to the
+    previous quarter, hence quarter week numbers may be greater than
+    11.
+
+days_of_week
+    Union of the day(s) of the week the workshop took place on, e.g.,
+    "Mon" or "TueThu".
+
+time_of_day
+    One of:
+        - All day
+        - Morning
+            Starting in the morning, possibly lasting through lunch
+        - Lunchtime
+            Starting at noon, lasting just the lunch hour
+        - Afternoon
+            Starting at lunch or later and lasting into the afternoon
+        - Evening
+            Starting at 5pm or later

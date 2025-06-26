@@ -1,0 +1,126 @@
+﻿title,date,num_students,modality,scheduling,week_in_quarter,days_of_week,time_of_day
+Exploring APIs the Hands-on Way,2025-05-13,5,In person,SS,7,Tue,Morning
+Tidying Messy Spreadsheets with OpenRefine,2025-05-09,9,In person,SS,6,Fri,Morning
+R,2025-05-01,12,In person,MSMW,5,ThuFri,Morning
+Research Computing and Data,2025-04-29,24,In person,SS,5,Tue,Lunchtime
+Pitfalls an Best Practices in Data Visualization,2025-04-28,12,In person,SS,5,Mon,Lunchtime
+Git/Github,2025-04-16,18,In person,SS,3,Wed,Morning
+Git,2025-04-14,21,In person,SS,3,Mon,Morning
+Bash,2025-04-11,20,Online,SS,2,Fri,Afternoon
+Bash,2025-04-10,7,In person,SS,2,Thu,Afternoon
+Machine Learning Python,2025-02-25,30,In person,MSSW,8,TueThu,Morning
+PALiISaDS Workshop: Creating your personal website with Quarto and GitHub Pages,2025-02-19,20,Online,SS,7,Wed,Evening
+Intermediate R,2025-02-19,11,In person,SS,7,Wed,Afternoon
+UC Love Data Week,2025-02-13,35,Online,SS,6,Thu,Morning
+UC Love Data Week: Quarto Showcase,2025-02-12,27,Online,SS,6,Wed,Lunchtime
+UC Love Data Week: Safeguarding Qualitative Data with QualiAnon,2025-02-12,17,Online,SS,6,Wed,Morning
+Workshop Introduction to APIs - UC love Data Week 2025,2025-02-11,100,Online,SS,6,Tue,Afternoon
+Container-driven Reproducible Research Made Simple,2025-02-05,9,In person,SS,5,Wed,Afternoon
+Grad Slam 2025,2025-02-04,12,In person,SS,5,Tue,Afternoon
+Research Computing and Data,2025-02-03,62,In person,MSSW,5,MonTue,Lunchtime
+R Geospatial,2025-01-23,28,In person,MSMW,3,ThuFri,Afternoon
+Python,2025-01-14,32,In person,MSMW,2,TueFri,Morning
+Handling and Sharing Qualitative Data Responsibly and Effectively,2024-11-22,5,In person,MSMW,9,TueFri,Morning
+Web Scraping,2024-11-05,16,In person,MSSW,7,TueThu,Morning
+Git,2024-10-22,23,In person,MSSW,5,TueFri,Morning
+R,2024-10-08,18,In person,MSMW,3,TueFri,Morning
+Python,2024-07-09,28,In person,MSMW,3,Tue,Morning
+Introduction to Spreadsheets,2024-07-02,24,In person,SS,2,Tue,Morning
+R Geospatial,2024-06-10,12,In person,MSSW,11,MonTue,Morning
+Container-driven Reproducible Research Made Simple,2024-06-04,22,In person,SS,10,Tue,Afternoon
+R for Social Sciences,2024-05-01,14,In person,MSSW,5,WedThu,Afternoon
+RDAP webinar,2024-04-18,77,Online,SS,3,Thu,Morning
+SORTEE,2024-03-07,30,Online,SS,9,Thu,Morning
+Web Scraping,2024-02-27,14,In person,SS,8,Tue,Afternoon
+UC Love Data Week: Dependency Management 101 Webinar,2024-02-14,27,Online,SS,6,Wed,Lunchtime
+UC Love Data Week,2024-02-12,15,Online,SS,6,Mon,Afternoon
+Grad Slam 2024,2024-02-12,13,In person,SS,6,Mon,Morning
+Bash/Git,2024-01-30,10,In person,MSSW,4,TueThu,Afternoon
+Introduction to Reproducible Publications With RStudio,2023-12-11,7,In person,MSSW,11,MonTue,Morning
+Workshop for Librarians,2023-12-06,8,In person,SS,10,Wed,Afternoon
+Python,2023-11-14,11,In person,MSSW,8,TueWedThu,Morning
+Bash/Git,2023-10-23,9,In person,MSSW,5,MonTue,Morning
+Python,2023-05-16,16,In person,MSSW,7,TueWedThu,Morning
+Planet Labs onboarding,2023-05-12,52,Hybrid,SS,6,Fri,All day
+"Measure, Map, and Publish with ArcGIS Pro and Online",2023-05-05,23,In person,SS,5,Fri,Morning
+Bash/Git,2023-04-25,11,In person,MSSW,4,TueWed,Morning
+Bioengineering Prospective Graduate Student Tour,2023-03-10,16,In person,SS,9,Fri,Afternoon
+Python,2023-02-21,12,In person,MSSW,7,TueWedThu,Morning
+Data De-identification in Practice,2023-02-15,35,Online,SS,6,Wed,Afternoon
+Data Visualization Do's and Don'ts,2023-02-13,65,Online,SS,6,Mon,Evening
+NIH Policy Webinar,2023-01-31,15,Online,SS,4,Tue,Afternoon
+Data Management with the DMPTool (MEDS Students),2023-01-25,32,In person,SS,3,Wed,Afternoon
+R for Social Sciences,2023-01-23,17,In person,MSMW,3,Mon,Morning
+Grad Slam,2023-01-20,5,In person,SS,2,Fri,Morning
+Introduction to Reproducible Publications With RStudio,2022-11-08,13,In person,MSSW,8,TueWedThu,Morning
+Data Management (MESM Program),2022-11-01,5,In person,SS,7,Tue,Morning
+R,2022-10-25,34,In person,MSSW,6,TueThu,Morning
+Bash/Git,2022-10-18,4,In person,MSSW,5,TueWedThu,Morning
+Introduction to Spreadsheets,2022-10-11,15,In person,SS,4,Tue,Morning
+Machine Learning R,2022-08-16,9,In person,MSSW,9,TueThu,Morning
+R Geospatial,2022-08-09,9,Hybrid,MSSW,8,TueThu,Morning
+R,2022-07-26,33,In person,MSSW,6,TueThu,Morning
+Git,2022-07-19,16,Hybrid,MSSW,5,TueThu,Morning
+Bash,2022-07-12,30,Hybrid,MSSW,4,TueThu,Morning
+Social Media Data Workshop,2022-05-26,14,In person,MSSW,9,ThuFri,Evening
+Web scraping,2022-05-12,20,Hybrid,MSSW,7,ThuFri,Evening
+Python,2022-04-19,19,Online,MSSW,4,TueThu,Morning
+Open Refine,2022-04-14,10,Online,SS,3,Thu,Afternoon
+R Geospatial,2022-04-11,3,In person,MSSW,3,MonWed,Morning
+R Geospatial,2022-04-07,33,Online,MSSW,2,ThuFri,Afternoon
+Introduction to Reproducible Publications With RStudio,2022-03-03,30,Online,MSSW,9,ThuFri,Morning
+R,2022-02-24,16,Online,MSSW,8,ThuFri,Morning
+Python,2022-02-15,17,Online,MSSW,7,TueThuFri,Afternoon
+Python,2022-02-07,15,Online,MSSW,6,MonWedFri,Afternoon
+Databases and Data Management,2022-02-04,21,Online,SS,5,Fri,Morning
+Github Pages,2022-01-31,14,Online,SS,5,Mon,Afternoon
+Github Pages,2022-01-28,10,Online,SS,4,Fri,Morning
+Bash/Git,2022-01-12,7,Online,MSSW,2,WedFri,Morning
+Python,2022-01-04,24,Online,MSSW,1,TueFri,Morning
+Bash/Git,2021-12-14,31,Online,MSSW,12,TueWed,Morning
+SQL,2021-11-04,29,Online,MSSW,7,ThuFri,Morning
+Archival Research session for the Living History Project,2021-11-02,13,In person,SS,7,Tue,Afternoon
+Python,2021-10-19,30,Online,MSSW,5,TueWedThuFri,Morning
+Python,2021-08-23,25,Online,MSSW,10,MonTueWedThu,Morning
+R,2021-08-16,17,Online,MSSW,9,MonTueWed,Morning
+Git,2021-08-11,15,Online,MSSW,8,WedThu,Morning
+Bash,2021-08-09,16,Online,MSSW,8,MonTue,Morning
+Transfers on Track,2021-05-21,8,Online,SS,8,Fri,Afternoon
+Promise Scholars Program,2021-05-13,45,Online,SS,7,Thu,Evening
+R Geospatial,2021-05-12,26,Online,MSSW,7,WedThuFri,Morning
+R,2021-05-06,30,Online,MSSW,6,ThuFri,Morning
+Python,2021-02-18,27,Online,MSSW,7,ThuFri,Morning
+Web Scraping,2021-02-12,22,Online,SS,6,Fri,Afternoon
+UC-wide Love Data Week Event,2021-02-11,26,Online,SS,6,Thu,Afternoon
+Git,2021-01-22,18,Online,SS,3,Fri,Morning
+Bash,2021-01-21,27,Online,SS,3,Thu,Morning
+R,2020-12-16,24,Online,MSSW,11,WedThu,Morning
+Open Refine,2020-11-09,16,Online,MSSW,12,MonTue,Morning
+CITRAL,2020-10-15,6,Online,SS,3,Thu,Afternoon
+R,2020-10-09,25,Online,MSMW,2,Fri,Morning
+Introduction to Reproducible Publications With RStudio,2020-10-09,29,Online,MSMW,2,Fri,Morning
+TSC/ONDAS/URCA/EOP,2020-09-21,50,Online,SS,14,Mon,Morning
+Python,2020-08-19,25,Online,MSMW,9,WedThu,Morning
+R,2020-08-17,34,Online,MSMW,9,MonTue,Morning
+Bash/Git,2020-08-10,23,Online,MSSW,8,MonTueWedThu,Morning
+qualitative data analysis study group: nvivo twitter demo,2020-06-10,7,Online,SS,11,Wed,Afternoon
+R,2020-05-22,36,Online,MSMW,8,Fri,Morning
+Using APIs for Non-programmers,2020-04-22,120,Online,SS,4,Wed,Morning
+Young Sustainability Professionals Academy - UCSB Sustainability,2020-01-29,15,In person,SS,4,Wed,Evening
+Zine Making Club,2020-01-13,3,In person,SS,2,Mon,Evening
+R Geospatial,2019-11-14,22,In person,MSMW,8,ThuFri,Morning
+Bash/Git,2019-10-24,17,In person,MSMW,5,Thu,Morning
+Academic Calendaring with Bullet Journaling,2019-10-08,3,In person,SS,3,Tue,Afternoon
+Graduate Student Orientation,2019-09-16,74,In person,SS,13,Mon,Afternoon
+Academic Calendaring with Bullet Journaling,2019-08-20,6,In person,SS,9,Tue,Afternoon
+Counseling and Psychological Services (CAPS) - Career Staff Group,2019-07-31,38,In person,SS,6,Wed,Morning
+Python,2019-06-25,36,In person,MSMW,1,TueThu,Morning
+Student Affairs Business Officers,2019-06-06,18,In person,SS,10,Thu,Afternoon
+Qualitative Data Workshop,2019-05-15,10,In person,SS,7,Wed,Morning
+Bash/Git/Python,2019-05-09,16,In person,MSSW,6,ThuFri,All day
+NVivo Citation Management Tools Workshop,2019-04-17,12,In person,SS,3,Wed,Morning
+Bash/Git/R,2019-04-11,15,In person,MSSW,2,ThuFri,All day
+Bash/Git/R,2019-03-21,11,In person,MSSW,11,ThuFri,All day
+Bash/Git/R,2019-02-21,16,In person,MSSW,7,ThuFri,All day
+"Workshop for Associated Students' Media Center: Creative Projects, creative use, creative commons",2019-02-20,4,In person,SS,7,Wed,Afternoon
+Bash/Git/R,2019-01-24,26,In person,MSSW,3,ThuFri,All day

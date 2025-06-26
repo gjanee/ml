@@ -1,0 +1,56 @@
+---
+title: "Decision tree analysis"
+format: html
+---
+
+Load the data and split out days of week into separate boolean columns to be able to treat each as a separate variable.
+
+```{r message=FALSE}
+library(tidyverse)
+library(rpart)
+library(rpart.plot)
+
+df <- read_csv("our-workshops.csv", col_types="cDiffiff")
+
+for (day in c("Mon", "Tue", "Wed", "Thu", "Fri")) {
+  df[[day]] <- grepl(day, df$days_of_week)
+}
+```
+
+For starters, just model the entire dataset.
+
+```{r}
+tree <- rpart(
+  num_students ~ (
+    modality +
+    scheduling +
+    week_in_quarter +
+    Mon + Tue + Wed + Thu + Fri +
+    time_of_day
+  ),
+  data=df
+)
+
+rpart.plot(tree, extra=1)
+```
+
+How good is this model?  Pretty bad.  Let's calculate a few statistics:
+
+```{r}
+median = median(df$num_students)
+rmse = sqrt(mean((predict(tree, df) - df$num_students)^2))
+r2 = cor(predict(tree, df), df$num_students)^2
+```
+
+The RMSE is `r round(rmse, 0)`, which is incredibly large given that the median number of students is `r round(median, 0)`.  $R^2$ is only `r round(r2, 2)`.
+
+Variable importance is as follows (these are percentages):
+
+```{r}
+importance <- round(
+  tree$variable.importance/sum(tree$variable.importance)*100,
+  0
+)
+importance
+```
+The top two variables, `r names(importance)[1]` and `r names(importance)[2]`, account for `r importance[1]+importance[2]`% of the variability.
