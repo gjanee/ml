@@ -14,6 +14,9 @@ modality
         - Online
         - Hybrid
 
+multi_campus
+    TRUE if the workshop was offered outside UCSB
+
 scheduling
     One of:
         - SS

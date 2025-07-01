@@ -3,14 +3,15 @@ title: "Decision tree analysis"
 format: html
 ---
 
-Load the data and split out days of week into separate boolean columns to be able to treat each as a separate variable.
+Load the data and split out days of week into separate boolean columns to be able to treat each as a separate variable.  Also, remove multi-campus workshops as their attendance numbers are not representative.
 
 ```{r message=FALSE}
 library(tidyverse)
 library(rpart)
 library(rpart.plot)
 
-df <- read_csv("our-workshops.csv", col_types="cDiffiff")
+df <- read_csv("our-workshops.csv", col_types="cDiflfiff") %>%
+  filter(!multi_campus)
 
 for (day in c("Mon", "Tue", "Wed", "Thu", "Fri")) {
   df[[day]] <- grepl(day, df$days_of_week)
@@ -33,8 +34,9 @@ tree <- rpart(
 
 rpart.plot(tree, extra=1)
 ```
+So higher attendance is associated with being online and being a single session in the morning.
 
-How good is this model?  Pretty bad.  Let's calculate a few statistics:
+But before we get too excited, how good is this model?  Pretty bad.  Let's calculate a few statistics:
 
 ```{r}
 median = median(df$num_students)
@@ -53,4 +55,5 @@ importance <- round(
 )
 importance
 ```
-The top two variables, `r names(importance)[1]` and `r names(importance)[2]`, account for `r importance[1]+importance[2]`% of the variability.
+
+The top four variables (`r names(importance)[1]`, `r names(importance)[2]`, `r names(importance)[3]`, and `r names(importance)[4]`) are roughly equally important and account for `r importance[1]+importance[2]+importance[3]+importance[4]`% of the variability.

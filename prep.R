@@ -102,16 +102,17 @@ locate_week_in_quarter <- function(date) {
 
 df$week_in_quarter <- sapply(df$date, locate_week_in_quarter)
 
-# Add time of day column for future manual entry
+# Add columns for future manual entry
 
+df$multi_campus <- FALSE
 df$time_of_day <- NA
 
 # Reorder columns, sort rows for predictability, and output
 
 df <- select(
     df,
-    title, date, num_students, modality, scheduling, week_in_quarter,
-    days_of_week, time_of_day
+    title, date, num_students, modality, multi_campus, scheduling,
+    week_in_quarter, days_of_week, time_of_day
   ) %>%
   arrange(desc(date))
 
