@@ -1,22 +1,38 @@
 ---
-title: "Decision tree analysis"
-format: html
+title: "Decision tree modeling"
+format:
+  html:
+    toc: true
+    toc-expand: true
+    df-print: kable
+    include-in-header:
+      - text: "<style>div.kable-table > table { width: auto }</style>"
 ---
-
-Load the data and split out days of week into separate boolean columns to be able to treat each as a separate variable.  Also, remove multi-campus workshops as their attendance numbers are not representative.
 
 ```{r message=FALSE}
 library(tidyverse)
 library(rpart)
 library(rpart.plot)
+library(randomForest)
 
-df <- read_csv("our-workshops.csv", col_types="cDiflfiff") %>%
-  filter(!multi_campus)
+set.seed(314159)
+```
+
+# Load data
+
+Load the data and split out the days of the week into separate boolean columns to be able to treat each as a separate variable.  (Recall that `days_of_week` records all days of the week on which the workshop took place.  So, for example, `Mon` will be true if the workshop took place on Monday, and possibly other days.)  Also, remove multi-campus workshops as their attendance numbers are not representative.
+
+```{r}
+df <- read_csv("our-workshops.csv", col_types="cDiflfiff")
 
 for (day in c("Mon", "Tue", "Wed", "Thu", "Fri")) {
   df[[day]] <- grepl(day, df$days_of_week)
 }
+
+df <- filter(df, !multi_campus)
 ```
+
+# Basic decision tree model
 
 For starters, just model the entire dataset.
 
@@ -29,12 +45,16 @@ tree <- rpart(
     Mon + Tue + Wed + Thu + Fri +
     time_of_day
   ),
-  data=df
+  data=df,
+  method="anova"
 )
 
 rpart.plot(tree, extra=1)
 ```
-So higher attendance is associated with being online and being a single session in the morning.
+
+The tree is interpreted as follows.  Each node displays the mean number of students and the number of workshops that mean was computed over.  So, at the root node, the mean attendance is `r round(mean(df$num_students), 0)` over `r nrow(df)` workshops.  At each conditional test, TRUE is always to the left and FALSE is always to the right.
+
+An advantage of a decision tree is its explanatory ability.  Caution must be used here, though, as the trees are not stable, but can vary wildly with changes in the training set or just a change in the random number seed.  In our case, it does seem consistent that the primary cut (i.e., the most important variable, on average) is modality, with the cut point being in person vs. not in person.  Beyond that, it's not clear that there are any universal rules.  Specific choices of scheduling or week in quarter might or might not yield higher attendance, depending on prior conditionals.  We explore this further below.
 
 But before we get too excited, how good is this model?  Pretty bad.  Let's calculate a few statistics:
 
@@ -44,16 +64,208 @@ rmse = sqrt(mean((predict(tree, df) - df$num_students)^2))
 r2 = cor(predict(tree, df), df$num_students)^2
 ```
 
-The RMSE is `r round(rmse, 0)`, which is incredibly large given that the median number of students is `r round(median, 0)`.  $R^2$ is only `r round(r2, 2)`.
+The RMSE is `r round(rmse, 1)`, which is incredibly large given that the median number of students is `r median`.  $R^2$ is only `r round(r2, 2)`.
 
 Variable importance is as follows (these are percentages):
 
 ```{r}
-importance <- round(
-  tree$variable.importance/sum(tree$variable.importance)*100,
-  0
-)
-importance
+importance <-
+  round(tree$variable.importance/sum(tree$variable.importance)*100, 0)
+
+importance %>%
+  enframe() %>%
+  rename(variable=name, importance=value)
 ```
 
-The top four variables (`r names(importance)[1]`, `r names(importance)[2]`, `r names(importance)[3]`, and `r names(importance)[4]`) are roughly equally important and account for `r importance[1]+importance[2]+importance[3]+importance[4]`% of the variability.
+The top four variables are roughly equally important and account for `r importance[1]+importance[2]+importance[3]+importance[4]`% of the variability.  But wait, those are just four of the five variables we started with!  So basically, the individual day of the week variables added nothing.
+
+# Comparison with simple statistics
+
+Let's see how the decision tree lines up with some simple statistics on individual variables over the entire dataset.  Note that we elide variable values for which the number of workshops is small.
+
+```{r}
+single_variable_effect <- function(variable) {
+  df %>%
+    group_by("{variable}":=get(variable)) %>%
+    summarize(
+      num_workshops=n(),
+      mean_num_students=round(mean(num_students), 0)
+    ) %>%
+    filter(num_workshops > 5) %>%
+    arrange(-mean_num_students)
+}
+```
+
+## Modality
+
+Since the root decision in the above decision tree is modality, the numbers here match the numbers at the tree root, no surprise.
+
+```{r echo=FALSE}
+single_variable_effect("modality")
+```
+
+## Scheduling
+
+A slight preference for workshops held over multiple weeks.
+
+```{r echo=FALSE}
+single_variable_effect("scheduling")
+```
+
+## Week in quarter
+
+Here's a surprise, attendance is substantially higher in week 6.  Why??  Related to midterm timing?
+
+```{r echo=FALSE}
+single_variable_effect("week_in_quarter") %>%
+  mutate(week_in_quarter=as.character(week_in_quarter))
+```
+
+Lest you think week 6 attendance is driven by a few outliers, there's actually fair variability across several variables:
+
+```{r}
+df %>%
+  filter(week_in_quarter==6) %>%
+  mutate(year=format(date, "%Y")) %>%
+  select(year, title, modality, num_students)
+```
+
+## Day of week
+
+Wednesday is least popular.
+
+```{r}
+df %>%
+  pivot_longer(cols=c(Mon, Tue, Wed, Thu, Fri), names_to="day_of_week") %>%
+  group_by(day_of_week) %>%
+  filter(value == TRUE) %>%
+  summarize(
+    num_workshops=n(),
+    mean_num_students=round(mean(num_students), 0)
+  ) %>%
+  arrange(-mean_num_students)
+```
+
+## Time of day
+
+A slight dispreference for the afternoon.
+
+```{r echo=FALSE}
+single_variable_effect("time_of_day")
+```
+
+## Summary
+
+Summarizing, on average, attendance is higher if a workshop is scheduled:
+
+- Online
+- Multiple sessions over multiple weeks
+- Week 6
+- Not Wednesday
+- Not in the afternoon
+
+# Random forest model
+
+Let's try a random forest to see if we can eke out a little better performance.  We omit days of the week since they just seem to degrade performance.  Rather than evaluating performance using a training/test split, the overall error will be estimated from the out-of-bag errors.
+
+```{r}
+forest <- randomForest(
+  num_students ~ modality + scheduling + week_in_quarter + time_of_day,
+  data=df
+)
+
+# This expression looks weird, but it matches randomForest's internal code
+rmse <- sqrt(forest[["mse"]][length(forest[["mse"]])])
+```
+
+The RMSE is `r round(rmse, 1)`, even worse.
+
+# Quantized approach
+
+Taking a cue from a paper by Angel et al[^1], we try quantizing the number of students into a small number of ranges (4 in our case), treat the index numbers of those ranges (1, 2, 3, ...) as a continuous variable, create a regression model on that new variable, and measure performance using RMSE as before.  In effect we are trading precision for what is hopefully increased accuracy.
+
+[^1]: Avital Angel, Achituv Cohen, Trisalyn Nelson, and Pnina Plaut.  Evaluating the relationship between walking and street characteristics based on big data and machine learning analysis.  *Cities* **151**, August 2024.  <https://doi.org/10.1016/j.cities.2024.105111>.
+
+When cutting the data into quartiles, the boundaries coincidentally closely align with multiples of 20.  For improved interpretability we break on those cleaner boundaries.
+
+```{r}
+df <- df %>% mutate(
+  attendance_level=cut(num_students, breaks=c(0, 20, 40, 60, 80), labels=FALSE)
+)
+```
+
+Create the model.  Note that we're ignoring a warning here that some attendance levels (the larger two, in fact) have fewer than 6 workshops.
+
+```{r warning=FALSE}
+forest_reg <- randomForest(
+  attendance_level ~ modality + scheduling + week_in_quarter + time_of_day,
+  data=df
+)
+
+rmse <- sqrt(forest_reg[["mse"]][length(forest_reg[["mse"]])])
+```
+
+The RMSE is `r round(rmse, 2)`.  Recall that the output variable takes on the integer values 1, 2, 3, 4.  If the RMSE were less than 0.5, we might conclude that we can, on average, reliably round the model's prediction to the correct value, but alas that's not quite the case.  How accurate is it?  Let's have the model make predictions on the entire dataset (acknowledging that that's what it was trained on):
+
+```{r}
+num_correct <- sum(round(predict(forest_reg, df), 0) == df$attendance_level)
+```
+
+The accuracy (or what we might call the match against the training dataset) is `r round(num_correct/nrow(df)*100, 0)`%.
+
+Rather than rounding the regression model's prediction, we can create a classification model from the beginning.  It might see this would be equivalent, but it isn't, and it happens to yield slightly better results.
+
+```{r}
+# Same as before, but create a factor instead of an integer variable
+df <- df %>% mutate(
+  attendance_level=cut(num_students, breaks=c(0, 20, 40, 60, 80))
+)
+
+forest_cls <- randomForest(
+  attendance_level ~ modality + scheduling + week_in_quarter + time_of_day,
+  data=df
+)
+
+accuracy <- 1 - forest_cls[["err.rate"]][forest_cls[["ntree"]], "OOB"]
+```
+
+The accuracy of this new model, estimated over out-of-bag errors, is `r round(accuracy*100, 0)`%.  To compare with the regression model, let's perform the same prediction test over the entire dataset:
+
+```{r}
+num_correct <- sum(predict(forest_cls, df) == df$attendance_level)
+```
+
+The match against the training dataset is `r round(num_correct/nrow(df)*100, 0)`%, an increase.  Given that this value is still nicely shy of 100% (no danger of an over-fitted model here), this leads us to believe that the new model is slightly more accurate.
+
+Finally, the classification model provides us with a confusion matrix which can help understand where the model goes wrong.
+
+```{r}
+forest_cls[["confusion"]]
+```
+
+As can be seen, the model is correct on the smallest attendance level `r round((1-forest_cls[["confusion"]][1,5])*100, 0)`% of the time.  At the next level the accuracy drops to `r round((1-forest_cls[["confusion"]][2,5])*100, 0)`%, and then it's completely wrong thereafter.
+
+Bottom line, the model sucks.
+
+# Save the model
+
+The only way to save a model is by writing it to a binary R data file, which means the saved form is dependent on both R and the package(s) required to interpret the saved data objects.  (If an R data file is loaded without the required packages, the restored objects appear as generic base R objects such as lists and data frames.)
+
+```{r}
+save(forest_cls, file="forest.Rdata")
+```
+
+# Run the model
+
+To run the classification forest model on new data, load it from the saved file, create a row in a dummy data frame holding the new workshop scenario (only the variables used by the model need be supplied), and run `predict` against it.  For example:
+
+```{r}
+scenario <- tibble(
+  modality=factor("In person", levels=levels(df$modality)),
+  scheduling=factor("SS", levels=levels(df$scheduling)),
+  week_in_quarter=2,
+  time_of_day=factor("Lunchtime", levels=levels(df$time_of_day))
+)
+
+predict(forest_cls, scenario)
+```
