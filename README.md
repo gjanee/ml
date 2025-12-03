@@ -25,3 +25,4 @@ events and the DREAM Lab's log of [historical
 workshops](https://carpentry.library.ucsb.edu/past-workshops/).
 
 `decision-tree.qmd` presents a decision tree analysis of the data.
+View at <https://gjanee.github.io/ml/decision-tree.html>.
