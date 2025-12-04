@@ -26,3 +26,7 @@ workshops](https://carpentry.library.ucsb.edu/past-workshops/).
 
 `decision-tree.qmd` presents a decision tree analysis of the data.
 View at <https://gjanee.github.io/ml/decision-tree.html>.
+
+There is also a [model
+card](https://gjanee.github.io/ml/modelcard.html) describing the
+model.
