@@ -21,7 +21,7 @@ page](https://docs.google.com/spreadsheets/d/1b_8dwZnUa6mtI8ZJBSqchMQ4GvgUGDsGrY
 maintained by Teaching & Learning.  This was processed by `prep.R` and
 then hand-edited (and hand-corrected in a few places) to add
 additional column values by referring back to old Google Calendar
-events and the DREAM Lab's log of [historical
+events and the DREAM Lab's log of [past
 workshops](https://carpentry.library.ucsb.edu/past-workshops/).
 
 `decision-tree.qmd` presents a decision tree analysis of the data.
